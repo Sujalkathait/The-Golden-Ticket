@@ -7,7 +7,9 @@ const Database = require('better-sqlite3');
 const path = require('path');
 const fs = require('fs');
 
-const DB_PATH = path.join(__dirname, 'golden_ticket.db');
+const DB_PATH = process.env.VERCEL
+  ? path.join('/tmp', 'golden_ticket.db')
+  : path.join(__dirname, 'golden_ticket.db');
 const TOTAL_COUPONS = 50;
 const EXPIRY_MINUTES = 10;
 

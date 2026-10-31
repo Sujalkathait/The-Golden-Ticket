@@ -1,0 +1,6 @@
+node_modules/
+golden_ticket.db
+golden_ticket.db-shm
+golden_ticket.db-wal
+*.log
+.DS_Store

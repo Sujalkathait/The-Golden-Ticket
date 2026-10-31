@@ -1,0 +1,25 @@
+{
+  "name": "golden-ticket-pbl",
+  "version": "1.0.0",
+  "description": "Find the Golden Ticket - GRAFEST Coupon Drop System",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test-concurrency.js",
+    "test:dashboard": "node test-dashboard.js"
+  },
+  "keywords": [
+    "golden-ticket",
+    "coupon",
+    "sqlite",
+    "express"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "better-sqlite3": "^13.0.3",
+    "cors": "^2.8.6",
+    "express": "^4.22.3",
+    "sqlite3": "^6.0.1"
+  }
+}

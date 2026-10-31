@@ -1,0 +1,60 @@
+ARCHVERSE: PROMPT TO GET THE DASHBOARD DETAILS
+================================================
+
+HOW TO USE
+1. Run this at the 0:45 checkpoint, when your server is running.
+2. Open your server code in your AI tool, then paste everything between the two lines below.
+3. Copy the AI's answer onto your API cheat sheet (or print it).
+4. Fix everything listed under "Problems found" before code freeze.
+5. Check the Base URL by opening it in a browser. If it does not load, the port is wrong.
+
+------------------------ COPY FROM HERE ------------------------
+Read my backend code and give me the exact values for a testing dashboard. Check the real code and, where possible, run the server and test each value with curl. Do not guess. If something is missing in my code, say "MISSING" and explain what to add instead of inventing it.
+
+Output ONLY this block, filled in, as plain text I can copy:
+
+PS: <canteen | seats | rides | coupons | practice>
+Base URL: http://localhost:<port my server really listens on>
+
+View path (GET): <path>
+Stock field in the View response: <the exact JSON key (with dot path if nested, e.g. data.remaining) that shows how many units/seats/coupons are left, as a number or an array>
+
+Reserve path (POST): <path>
+Race payload: <one valid JSON body for a NEW student, with the student ID value written exactly as {{USER_ID}}>
+Idempotency payload: <valid JSON body for a student, student ID written as {{USER_ID}}>
+Invalid-item payload: <JSON body that asks for an item/seat/cab/coupon that does NOT exist, student ID as {{USER_ID}}>
+Cross-booking payload: <JSON body where the same student asks for a SECOND, different item (only if my rules say a student may hold one booking, otherwise write "not needed"), student ID as {{USER_ID}}>
+Record ID field in the Reserve response: <the exact JSON key that holds the new record's ID>
+
+Status path (PATCH): <path; write the record ID part as {{ID}}, e.g. /orders/{{ID}}/status>
+Status payload: <JSON body with the status value written as {{STATUS}}, and the record ID written as {{ID}} if it is in the body>
+Status sequence (exact spelling, comma separated): <e.g. Placed,Preparing,Ready,Collected>
+Status right after reserving: <the status a record has immediately after a successful reserve>
+
+CORS enabled for all origins, GET POST PATCH OPTIONS, header Content-Type: <YES or NO>
+Items that exist in the seeded data (give two): <IDs>
+Stock at server start: <number>
+
+Then add a "Problems found" section listing anything the dashboard would fail on, for example:
+- the View response has no stock number
+- the Reserve response has no record ID
+- a failure returns 200 with an error message instead of a 4xx code
+- the status route is not PATCH
+- CORS is missing for PATCH or OPTIONS
+- the database is not reset when the server starts
+------------------------- COPY UNTIL HERE ------------------------
+
+FOR THE JUDGE: WHERE EACH LINE GOES IN THE DASHBOARD
+Base URL                          -> Team's Base URL
+View path                         -> View Endpoint Path
+Stock field                       -> Stock field in View response
+Reserve path                      -> Reserve / Claim Endpoint Path
+Race payload                      -> Race payload
+Idempotency payload               -> Idempotency payload
+Invalid-item payload              -> Invalid-item payload
+Cross-booking payload             -> Cross-booking payload (leave empty if "not needed")
+Record ID field                   -> Record ID field in Reserve response
+Status path                       -> Status Update Path
+Status payload                    -> Status payload
+Status sequence                   -> Status sequence
+Status right after reserving      -> "State after reserve" (0 = first status, 1 = second status, and so on)

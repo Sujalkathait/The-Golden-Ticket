@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Golden Ticket — GRAFEST Coupon Drop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="ambient-glow g1"></div>
+  <div class="ambient-glow g2"></div>
+
+  <div class="container">
+
+    <!-- HEADER -->
+    <header class="header">
+      <span class="tag">ARCHVERSE 2026 • PROBLEM 04</span>
+      <h1 class="title">The Golden Ticket</h1>
+      <p class="subtitle">GRAFEST Midnight Coupon Drop — 50 Coupons, Zero Duplicates</p>
+
+      <!-- LIVE STATS -->
+      <div class="stats-row">
+        <div class="stat gold-border">
+          <div class="stat-label">AVAILABLE</div>
+          <div class="stat-num gold" id="s-available">50</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">CLAIMED</div>
+          <div class="stat-num amber" id="s-claimed">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">REDEEMED</div>
+          <div class="stat-num green" id="s-redeemed">0</div>
+        </div>
+        <div class="stat">
+          <div class="stat-label">EXPIRED</div>
+          <div class="stat-num red" id="s-expired">0</div>
+        </div>
+      </div>
+
+      <!-- PROGRESS BAR -->
+      <div class="progress-box">
+        <div class="progress-labels">
+          <span>Pool: <b id="pct">0%</b> Claimed</span>
+          <span id="pcount">50 / 50 Remaining</span>
+        </div>
+        <div class="progress-track"><div class="progress-fill" id="pfill"></div></div>
+      </div>
+
+      <!-- DEMO & QUICK ACTIONS -->
+      <div class="demo-bar">
+        <button class="btn btn-demo" onclick="loadDemoData()">⚡ Load Realistic Demo Data</button>
+        <button class="btn btn-live" id="btn-live-toggle" onclick="toggleLiveTraffic()">▶️ Start Real-Time Traffic</button>
+        <button class="btn btn-top-reset" onclick="doReset()">🔄 Reset Stock (50 Fresh)</button>
+      </div>
+    </header>
+
+    <!-- THREE MAIN PANELS -->
+    <main class="grid3">
+
+      <!-- PANEL 1: CLAIM -->
+      <section class="panel">
+        <div class="panel-top">
+          <span class="badge">STEP 1 & 2</span>
+          <h2>Claim Your Ticket</h2>
+        </div>
+        <p class="desc">Enter your Student ID and claim. Repeated taps are safe — you get exactly 1 coupon.</p>
+
+        <label class="lbl">STUDENT ID / ROLL NUMBER</label>
+        <div class="row-input">
+          <input type="text" id="inp-sid" placeholder="e.g. STU-2026-101">
+          <button class="btn-sm" onclick="randomId()">🎲</button>
+        </div>
+
+        <button class="btn btn-gold" id="btn-claim" onclick="doClaim()">🎟️ Claim Golden Ticket</button>
+        <button class="btn btn-outline" onclick="doPanic()">⚡ Simulate 10 Rapid Taps</button>
+
+        <!-- TICKET CARD -->
+        <div class="ticket hidden" id="ticket-box">
+          <div class="ticket-head">
+            <span class="shimmer">★ GOLDEN TICKET ★</span>
+            <span class="pill" id="t-status">Claimed</span>
+          </div>
+          <div class="ticket-code" id="t-code">GT-001</div>
+          <div class="ticket-row"><span>Student:</span><b id="t-sid">--</b></div>
+          <div class="ticket-row"><span>Record ID:</span><span id="t-id">1</span></div>
+          <div class="ticket-row"><span>Claimed:</span><span id="t-time">--</span></div>
+          <div class="countdown-box">
+            <span class="cd-label">Expiry Countdown:</span>
+            <span class="cd-timer" id="t-countdown">10:00</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PANEL 2: REDEEM / STATUS -->
+      <section class="panel">
+        <div class="panel-top">
+          <span class="badge">STEP 3</span>
+          <h2>Redeem & Lifecycle</h2>
+        </div>
+        <p class="desc">Journey: <code>Unclaimed</code> → <code>Claimed</code> → <code>Redeemed</code> → <code>Expired</code></p>
+
+        <label class="lbl">COUPON ID OR CODE</label>
+        <input type="text" id="inp-redeem" placeholder="e.g. 1 or GT-001">
+
+        <button class="btn btn-green" onclick="doRedeem()">✅ Mark Redeemed (PATCH)</button>
+        <button class="btn btn-red" onclick="doExpire()">⏱️ Mark Expired (PATCH)</button>
+
+        <div class="info-box">
+          <div class="info-title">Lifecycle Rules:</div>
+          <ul>
+            <li><b>Unclaimed:</b> Ready to claim</li>
+            <li><b>Claimed:</b> Held by student, 10m timer starts</li>
+            <li><b>Redeemed:</b> Used at food stall</li>
+            <li><b>Expired:</b> Terminal status</li>
+            <li><span class="bonus">+10 Bonus:</span> Unredeemed after 10 min → returns to pool!</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- PANEL 3: STRESS TEST -->
+      <section class="panel">
+        <div class="panel-top">
+          <span class="badge">JUDGES LAB</span>
+          <h2>Concurrency Tester</h2>
+        </div>
+        <p class="desc">Prove zero race conditions and instant sold-out handling.</p>
+
+        <button class="btn btn-blue" onclick="doStress()">🚀 Fire 100 Simultaneous Requests</button>
+        <button class="btn btn-outline" onclick="doExpiryTest()">⏩ Test 10-Min Expiry Return</button>
+        <button class="btn btn-danger" onclick="doReset()">🔄 Fresh Reset (50 Coupons)</button>
+
+        <div class="console-box">
+          <div class="console-top">
+            <span>TEST OUTPUT</span>
+            <span class="cbadge" id="cbadge">Ready</span>
+          </div>
+          <pre class="console" id="console">Click a button above to run a test.</pre>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- COUPON LEDGER -->
+    <section class="ledger">
+      <div class="ledger-head">
+        <div>
+          <h2>Coupon Ledger (All 50)</h2>
+          <p class="desc">Real-time status of every coupon.</p>
+        </div>
+        <div class="ledger-controls">
+          <div class="tabs">
+            <button class="tab active" onclick="setFilter('all',this)">All</button>
+            <button class="tab" onclick="setFilter('Unclaimed',this)">Unclaimed</button>
+            <button class="tab" onclick="setFilter('Claimed',this)">Claimed</button>
+            <button class="tab" onclick="setFilter('Redeemed',this)">Redeemed</button>
+            <button class="tab" onclick="setFilter('Expired',this)">Expired</button>
+          </div>
+          <input type="text" id="inp-search" placeholder="🔍 Search..." oninput="doSearch()">
+        </div>
+      </div>
+      <div class="coupon-grid" id="coupon-grid"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p>ArchVerse 2026 • Problem Statement 04: The Golden Ticket</p>
+      <p class="mono">
+        <code>GET /coupons</code> •
+        <code>POST /coupons</code> •
+        <code>PATCH /coupons/:id</code>
+      </p>
+    </footer>
+
+  </div>
+
+  <!-- TOAST -->
+  <div id="toasts" class="toasts"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -120,6 +120,7 @@ The-Golden-Ticket/
 │   └── app.js                     # Real-time state synchronization & simulation controller
 │
 ├── md/                            # Documentation
+│   ├── ArchVerse_API_Cheat_Sheet.md # Official formatted & filled cheat sheet (Utopia '26)
 │   ├── API_CHEAT_SHEET.md         # Printable API cheat sheet with curl examples
 │   ├── PRESENTATION_NOTES.md      # ArchVerse PPT content & viva Q&A guide
 │   └── prompt.md                  # Problem statement & prompt archive
